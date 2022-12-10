@@ -24,27 +24,7 @@ const AboutPage = ({ changelog }) => {
             This is an independent site not affiliated with Reddit. All content
             on this site is retrieved from the public Reddit API.
           </p>
-
-          <p className="">
-            For any feature requests, bug reports, or general conversation head
-            over to <Link href={"/r/TrodditForReddit"}><a className={link}>r/TrodditForReddit</a></Link>.
-            You can also create an issue on{" "}
-            <a
-              href="https://www.github.com/burhan-syed/troddit"
-              target="_blank"
-              rel="noreferrer"
-              className={link}
-            >
-              GitHub
-            </a>{" "}
-            or contact me at{" "}
-            <a
-              className={link}
-              href="mailto: trodditdev@gmail.com"
-            >
-              trodditdev@gmail.com
-            </a> for anything else.
-          </p>
+          
           <p className="">
             <Link href={"/changelog"}>
               <a className="flex flex-wrap justify-between pt-5 font-semibold hover:underline">
@@ -57,23 +37,15 @@ const AboutPage = ({ changelog }) => {
         <div className="absolute left-0 w-full bottom-5 sm:bottom-20">
           <div className="flex items-center justify-between max-w-xl mx-4 sm:mx-auto">
             <a
-              href="https://ko-fi.com/K3K47IYH1"
+              href="https://metastem.su/"
               target="_blank"
               rel="noreferrer"
             >
               <img
-                src="https://uploads-ssl.webflow.com/5c14e387dab576fe667689cf/61e11e22d8ff4a5b4a1b3346_Supportbutton-1-p-500.png"
-                alt="Buy Me a Coffee at ko-fi.com"
+                src="../logo/logo.png"
+                alt="Try Metastem Search"
                 className="h-10 transition-all rounded-md border-th-border hover:scale-110"
               />
-            </a>
-            <a
-              href="https://www.github.com/burhan-syed/troddit"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:cursor-pointer"
-            >
-              <AiOutlineGithub className="w-12 h-12 transition-all hover:scale-110" />
             </a>
           </div>
         </div>
