@@ -42,7 +42,7 @@ const AboutPage = ({ changelog }) => {
               rel="noreferrer"
             >
               <img
-                src="../logo/logo.png"
+                src="https://metastem.su/logo.png"
                 alt="Try Metastem Search"
                 className="h-10 transition-all rounded-md border-th-border hover:scale-110"
               />
