@@ -1,7 +1,7 @@
 import "../../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
-import { MainProvider } from "../MainContext";
+import { MainProvider, localSeen } from "../MainContext";
 import { MySubsProvider } from "../MySubs";
 import { MyCollectionsProvider } from "../components/collections/CollectionContext";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -16,10 +16,12 @@ import React, { useEffect } from "react";
 import packageInfo from "../../package.json";
 import { checkVersion } from "../../lib/utils";
 import ToastCustom from "../components/toast/ToastCustom";
+import { usePlausible } from "next-plausible";
 
 const VERSION = packageInfo.version;
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }) {
+  const plausible = usePlausible();
   useEffect(() => {
     const curVersion = VERSION;
     const prevVersion = localStorage.getItem("trodditVersion");
@@ -39,6 +41,53 @@ function MyApp({ Component, pageProps }) {
       }
     }
     localStorage.setItem("trodditVersion", curVersion);
+    function setNoSurveyFlag() {
+      localStorage.setItem("nosurvey1", JSON.stringify(true));
+    }
+    if (!JSON.parse(localStorage.getItem("nosurvey1") ?? "false")) {
+      localSeen
+        .length()
+        .then((length) => {
+          if (length > 10000) {
+            plausible("survey");
+            const toastId = toast.custom(
+              (t) => (
+                <ToastCustom
+                  t={t}
+                  message={`Thanks for using Troddit. Can you take a survey?`}
+                  mode={"link"}
+                  link="https://forms.gle/8rqwa1rR1Yc6HLxZ6"
+                  actionLabel=""
+                  action={() => {
+                    window.location.href =
+                      "https://forms.gle/8rqwa1rR1Yc6HLxZ6";
+                  }}
+                  action2={() => {
+                    toast.custom(
+                      (t2) => (
+                        <ToastCustom
+                          t={t2}
+                          message="Don't show survey again?"
+                          mode="alert"
+                          action={setNoSurveyFlag}
+                        />
+                      ),
+                      {
+                        position: "bottom-center",
+                        duration: 3000,
+                        id: "survey-close",
+                      }
+                    );
+                  }}
+                  showAll={true}
+                />
+              ),
+              { position: "bottom-center", duration: 10000, id: "survey" }
+            );
+          }
+        })
+        .catch((err) => {});
+    }
   }, []);
   return (
     <>
